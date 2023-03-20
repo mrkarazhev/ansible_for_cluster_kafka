@@ -1,0 +1,7 @@
+---
+server1: "{{ ip first broker"
+server2: "{{ ip second broker }}"
+server3: "{{ ip third broker }}"
+hostname1: "{{ hostname first node }}"
+hostname2: "{{ hostname second noe }}"
+hostname3: "{{ hostname third node }}"

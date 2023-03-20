@@ -1,0 +1,48 @@
+broker.id={{ broker_id }}
+
+# automatically create topics
+auto.create.topics.enable=true
+
+listeners=PLAINTEXT://{{ ip_address }}:9092
+
+advertised.listeners=PLAINTEXT://{{ ip_address }}:9092
+
+num.network.threads=3
+num.io.threads=8
+
+socket.send.buffer.bytes=102400
+socket.receive.buffer.bytes=102400
+socket.request.max.bytes=104857600
+
+# Where logs are stored
+log.dirs=/home/kafka/kafka-logs
+
+# default number of partitions
+num.partitions=30
+
+# default replica count based on the number of brokers
+default.replication.factor=3
+
+# to protect yourself against broker failure
+min.insync.replicas=2
+
+num.recovery.threads.per.data.dir=1
+
+offsets.topic.replication.factor=3
+transaction.state.log.replication.factor=3
+transaction.state.log.min.isr=1
+
+log.flush.interval.messages=10000
+log.flush.interval.ms=1000
+log.retention.hours=168
+log.retention.bytes=1073741824
+log.segment.bytes=1073741824
+log.retention.check.interval.ms=300000
+
+# location of all zookeeper instances and kafka directory
+zookeeper.connect={{ zookeeper_connect }}
+
+# timeout for connecting with zookeeper
+zookeeper.connection.timeout.ms=18000
+
+#group.initial.rebalance.delay.ms=0

@@ -1,0 +1,25 @@
+# the directory where the snapshot is stored.
+dataDir=/home/kafka/zookeeper
+
+# the port at which the clients will connect
+clientPort=2181
+
+
+# setting number of connections to unlimited
+maxClientCnxns=0
+
+# keeps a heartbeat of zookeeper in milliseconds
+tickTime=2000
+
+# time for initial synchronization
+initLimit=10
+
+# how many ticks can pass before timeout
+syncLimit=5
+
+admin.enableServer=false
+
+# define servers ip and internal ports to zookeeper
+server.1={{ server1 }}:2888:3888
+server.2={{ server2 }}:2888:3888
+server.3={{ server3 }}:2888:3888

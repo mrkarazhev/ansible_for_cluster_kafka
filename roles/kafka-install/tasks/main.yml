@@ -1,0 +1,55 @@
+---
+- name: "Install jre"
+  apt:
+    pkg:
+    - default-jre
+
+- name: "Create user/group kafka"
+  block:
+  - name: "Create Group"
+    group:
+      name: kafka
+  - name: "Create user kafka"
+    user:
+      name: kafka
+      groups: "kafka, sudo"
+      shell: /bin/bash
+      home: /home/kafka
+
+- name: "Download kafka"
+  get_url: 
+    url: https://downloads.apache.org/kafka/3.4.0/kafka_2.12-3.4.0.tgz
+    dest: /opt
+
+- name: "Create destination directory"
+  block:
+  - name: "Unarchive"
+    unarchive:
+      src: /opt/kafka_2.12-3.4.0.tgz
+      dest: /opt
+      remote_src: true
+      owner: kafka
+      group: kafka
+  - name: "Create directory"
+    file:
+      path: /opt/kafka
+      state: directory
+      mode: 0755
+      owner: kafka
+      group: kafka
+  - name: "Copy Files"
+    copy:
+      src: /opt/kafka_2.12-3.4.0/
+      dest: /opt/kafka
+      remote_src: true
+      owner: kafka
+      group: kafka
+  - name: "Delete old"
+    file:
+      path: "{{ item }}"
+      state: absent
+    with_items:
+      - /opt/kafka_2.12-3.4.0
+      - /opt/kafka_2.12-3.4.0.tgz
+
+

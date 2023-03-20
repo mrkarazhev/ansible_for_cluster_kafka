@@ -1,0 +1,63 @@
+---
+- name: "Create directory for logs and zookeeper file MYID"
+  block:
+  - name: "Create directory"
+    file:
+      path: /home/kafka/{{ item }}
+      owner: kafka
+      group: kafka
+      state: directory
+    loop:
+      - kafka-logs
+      - zookeeper
+  - name:  "Create file Myid for zookeeper"
+    file:
+      path: /home/kafka/zookeeper/myid
+      owner: kafka
+      group: kafka
+      state: touch
+  - name: "Add id in file myid"
+    lineinfile:
+      path: /home/kafka/zookeeper/myid
+      line: "{{ zookeeper_id }}"
+
+- name: "Configure file hosts"
+  template:
+    src: roles/kafka-setup/files/hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+
+- name: "Copy files for systemd.service"
+  copy:
+    src: roles/kafka-setup/files/{{ item }}
+    dest: /etc/systemd/system/
+  loop:
+    - kafka.service
+    - zookeeper.service
+
+- name: "Systemd daemon-reload"
+  systemd:
+    daemon_reload: true
+
+- name: "Copy configuration files for zookeeper"
+  template:
+    src: roles/kafka-setup/files/zookeeper.properties.j2
+    dest: /opt/kafka/config/zookeeper.properties
+    owner: kafka
+    group: kafka
+  notify:
+    - Restart zookeeper
+  become: yes
+  become_user: root
+
+- name: "Copy configuration files for kafka"
+  template:
+    src: roles/kafka-setup/files/server.properties.j2
+    dest: /opt/kafka/config/server.properties
+    owner: kafka
+    group: kafka
+  notify:
+    - Restart kafka
+  become: yes
+  become_user: root

@@ -1,0 +1,44 @@
+---
+- name: "Install docker and kafka"
+  hosts: all
+  become: yes
+  gather_facts: False
+  roles:
+  - docker-install
+  - kafka-install
+
+- name: "Configure kafka first node"
+  hosts: broker-1
+  become: yes
+  gather_facts: False
+  roles:
+  - role: kafka-setup
+    vars:
+      broker_id: "1"
+      zookeeper_id: "1"
+      ip_address: "{{ ip your broker }}"
+      zookeeper_connect: "{{ zookeepers ip }}"
+
+- name: "Configure kafka second node"
+  hosts: broker-2
+  become: yes
+  gather_facts: False
+  roles:
+  - role: kafka-setup
+    vars:
+      broker_id: "2"
+      zookeeper_id: "2"
+      ip_address: "{{ ip your broker }}"
+      zookeeper_connect: "{{ zookeepers ip }}"
+
+- name: "Configure kafka third node"
+  hosts: broker-3
+  become: yes
+  gather_facts: False
+  roles:
+  - role: kafka-setup
+    vars:
+      broker_id: "3"
+      zookeeper_id: "3"
+      ip_address: "{{ ip your broker }}"
+      zookeeper_connect: "{{ zookeepers ip }}"
