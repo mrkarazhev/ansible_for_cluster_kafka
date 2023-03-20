@@ -6,14 +6,11 @@
 #{{ ip/domain name your broker }}
 
 [broker-1:vars]
-broker-1={{ ip/domain name your broker }}
 #In this block you specify the details for the connection
 
 [broker-2:vars]
-broker-2={{ ip/domain name your broker }}
 #In this block you specify the details for the connection
 
 
 [broker-3:vars]
-broker-3={{ ip/domain name your broker }}
 #In this block you specify the details for the connection
