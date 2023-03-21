@@ -29,7 +29,7 @@ The kafka-setup role consists of 4 directories :
 
 ***tasks*** - specifies the cluster configuration steps 
 
-***vars*** - contains main.yml file, it uses variables for hosts file and zukiper configuration file
+***vars*** - contains main.yml file, it uses variables for hosts file and zookeeper configuration file
 
 
 
